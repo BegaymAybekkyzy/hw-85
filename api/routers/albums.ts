@@ -9,7 +9,7 @@ albumRouter.get("/", async (req, res, next) => {
     try {
         const {artist} = req.query;
         const filter = artist ? {artist} : {};
-        const albums = await Album.find(filter);
+        const albums = await Album.find(filter).sort({ album_year: -1 });
         res.send(albums);
     } catch (error) {
         if (error instanceof Error.ValidationError || error instanceof Error.CastError) {
@@ -23,7 +23,7 @@ albumRouter.get("/", async (req, res, next) => {
 albumRouter.get("/:id", async (req, res, next) => {
    try {
        const {id} = req.params;
-       const album = await Album.findById(id).populate("artist");
+       const album = await Album.findById(id).populate("artist").sort({ album_year: -1 });
 
        if (!album) {
            res.send({message: "Album not found"});
