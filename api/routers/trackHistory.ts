@@ -9,14 +9,14 @@ trackHistoryRouter.post("/", async (req, res, next) => {
     try {
         const token = req.get("Authorization");
         if (!token) {
-            res.status(401).send({error: "No token present"});
+            res.status(401).send({error: "Unauthorized"});
             return;
         }
 
         const user = await User.findOne({token});
 
         if (!user) {
-            res.status(401).send({error: "User not found"});
+            res.status(401).send({error: "Unauthorized"});
             return;
         }
 

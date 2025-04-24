@@ -6,7 +6,6 @@ const trackSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-
     album: {
         type: Schema.Types.ObjectId,
         required: true,
