@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {selectAllArtists, selectFetchLoading} from "./artistsSlice.ts";
+import {selectAllArtists, selectFetchLoadingArtist} from "./artistsSlice.ts";
 import {fetchAllArtists} from "./artistsThunks.ts";
 import Loader from "../../components/UI/Loader/Loader.tsx";
 import Typography from "@mui/material/Typography";
@@ -10,7 +10,7 @@ import {Grid} from "@mui/material";
 const ArtistsList = () => {
         const dispatch = useAppDispatch();
         const allArtists = useAppSelector(selectAllArtists);
-        const loading = useAppSelector(selectFetchLoading);
+        const loading = useAppSelector(selectFetchLoadingArtist);
 
         useEffect(() => {
             dispatch(fetchAllArtists());
@@ -19,26 +19,26 @@ const ArtistsList = () => {
         let content: React.ReactNode = <h1>Artist list is empty</h1>;
         if (loading) {
             content = (
-                <Typography component="div" style={{height: "80hv", display: "flex", justifyContent: "center"}}>
+                <Typography component="div" sx={{height: "80hv", display: "flex", justifyContent: "center"}}>
                     <Loader/>
                 </Typography>)
         }
 
         if (allArtists.length > 0 && !loading) {
             content = (
-                allArtists.map((artist) => (
-                    <Grid>
-                        <ArtistCard key={artist._id} artist={artist}/>
-                    </Grid>
-                ))
+                <Grid container spacing={2}>
+                    {allArtists.map((artist) => (
+                        <Grid key={artist._id}>
+                            <ArtistCard artist={artist}/>
+                        </Grid>
+                    ))}
+                </Grid>
             )
         }
 
         return (
             <main>
-                <Grid container spacing={2}>
-                    {content}
-                </Grid>
+                {content}
             </main>
         );
     }

@@ -19,7 +19,7 @@ trackRouter.get("/", async (req, res, next) => {
             filter = {album: {$in: albumsIds}};
         }
 
-        const tracks = await Track.find(filter);
+        const tracks = await Track.find(filter).sort({ number: 1 });
         res.send(tracks);
     } catch (error) {
         if (error instanceof Error.ValidationError || error instanceof Error.CastError) {

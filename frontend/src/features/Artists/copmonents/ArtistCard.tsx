@@ -1,14 +1,11 @@
 import React from 'react';
 import {IArtistAPI} from "../../../types.s.ts";
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import {Typography, Button, CardMedia, CardContent, CardActions, Card} from '@mui/material';
 import {BASE_URL} from "../../../constants.ts";
-import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import NoImage from "../../../assets/no_Image.jpg"
+import {nameRetention} from "../../Albums/albumsSlice.ts";
+import {useAppDispatch} from "../../../app/hooks.ts";
 
 interface Props {
     artist: IArtistAPI;
@@ -16,15 +13,22 @@ interface Props {
 
 const ArtistCard: React.FC<Props> = ({artist}) => {
     let imagePath = NoImage;
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     if (artist.photo) {
         imagePath = BASE_URL + "/" + artist.photo;
     }
 
+    const redirect = async () => {
+        dispatch(nameRetention(artist.name));
+        await navigate(`/artist_albums/${artist._id}`);
+    };
+
     return (
-        <Card sx={{ width: 345 }}>
+        <Card sx={{width: 345}}>
             <CardMedia
-                sx={{ height: 270 }}
+                sx={{height: 270}}
                 image={imagePath}
                 title={artist.name}
             />
@@ -32,7 +36,10 @@ const ArtistCard: React.FC<Props> = ({artist}) => {
                 <Typography gutterBottom variant="h5" component="div">{artist.name}</Typography>
             </CardContent>
             <CardActions>
-                <Button sx={{color: "#5F9EA0"}} component={NavLink} to={`/albums`}>Learn More</Button>
+                <Button
+                    sx={{color: "#5F9EA0"}}
+                    onClick={redirect}
+                >Artist albums</Button>
             </CardActions>
         </Card>
     );

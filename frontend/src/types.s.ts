@@ -20,7 +20,7 @@ export interface IAlbumForm {
 
 export interface IAlbumApi {
     _id: string;
-    artist: string;
+    artist: string | IArtistAPI;
     album_year: number;
     title: string;
     cover: string;
@@ -35,16 +35,4 @@ export interface ITrackForm {
 export interface ITrackApi extends ITrackForm {
    _id: string;
     number: string;
-}
-
-export interface IError {
-    errors: {
-        [key: string]: {
-            name: string;
-            message: string;
-        }
-    },
-    message: string;
-    name: string;
-    _message: string;
 }
