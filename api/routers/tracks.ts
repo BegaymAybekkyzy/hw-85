@@ -32,12 +32,13 @@ trackRouter.get("/", async (req, res, next) => {
 
 trackRouter.post("/", async (req, res, next) => {
     try {
-        const {album, title, duration} = req.body;
+        const {album, title, duration, number} = req.body;
 
         const newTrack = new Track({
             album,
             title,
             duration,
+            number,
         });
 
         await newTrack.save();
