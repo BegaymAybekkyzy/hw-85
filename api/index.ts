@@ -6,10 +6,12 @@ import * as mongoose from "mongoose";
 import userRouter from "./routers/users";
 import trackHistoryRouter from "./routers/trackHistory";
 import config from "./config";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
 
+app.use(cors());
 app.use(express.json());
 app.use("/artists", artistRouter);
 app.use("/albums", albumRouter);
