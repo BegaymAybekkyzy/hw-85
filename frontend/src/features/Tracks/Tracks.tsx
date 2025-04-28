@@ -23,7 +23,7 @@ const Tracks = () => {
         }
     }, [dispatch, albumId]);
 
-    let content: React.ReactNode = <h1>Artist list is empty</h1>;
+    let content: React.ReactNode = <h1>No track list</h1>;
     if (loading) {
         content = (
             <Typography component="div" sx={{height: "80hv", display: "flex", justifyContent: "center"}}>

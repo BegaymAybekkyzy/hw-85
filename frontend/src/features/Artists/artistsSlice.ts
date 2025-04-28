@@ -13,8 +13,8 @@ const initialState: ArtistsState = {
     fetchLoading: false,
 }
 
-export const selectAllArtists = (state: RootState) => state.artist.allArtists;
-export const selectFetchLoadingArtist = (state: RootState) => state.artist.fetchLoading;
+export const selectAllArtists = (state: RootState) => state.artists.allArtists;
+export const selectFetchLoadingArtist = (state: RootState) => state.artists.fetchLoading;
 
 export const artistsSlice = createSlice({
     name: "artists",
