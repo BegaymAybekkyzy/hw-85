@@ -16,10 +16,15 @@ const AppToolbar = () => {
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setUserEl(event.currentTarget);
     };
-    const handleClose = async () => {
+
+    const handleClose = () => {
         setUserEl(null);
-        dispatch(logout(user));
     };
+
+    const onLogout = () => {
+        dispatch(logout());
+        setUserEl(null);
+    }
 
     return (
         <AppBar position="static" sx={{backgroundColor: "#5F9EA0", marginBottom: "50px"}}>
@@ -45,17 +50,21 @@ const AppToolbar = () => {
                                     open={open}
                                     onClose={handleClose}
                                 >
-                                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                    <MenuItem onClick={onLogout}>Logout</MenuItem>
                                 </Menu>
-                                </Box>
+                            </Box>
                             : <>
                                 <Button
                                     sx={{color: "white"}}
                                     component={NavLink}
                                     to="/registration"
                                 >Registration</Button>
-                                <Button sx={{color: "white"}}>Login</Button>
-                                </>
+                                <Button
+                                    sx={{color: "white"}}
+                                    component={NavLink}
+                                    to="/authentication"
+                                >Login</Button>
+                            </>
                     }
                 </Grid>
             </Toolbar>

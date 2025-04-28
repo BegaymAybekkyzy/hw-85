@@ -8,7 +8,7 @@ interface userState {
     registrationLoading: boolean;
     registrationErrors: IRegistrationError | IError | null;
     authenticationLoading: boolean;
-    authenticationErrors: boolean;
+    authenticationErrors: | IError | null;
 }
 
 const initialState: userState = {
@@ -16,12 +16,12 @@ const initialState: userState = {
     registrationLoading: false,
     registrationErrors: null,
     authenticationLoading: false,
-    authenticationErrors: false,
+    authenticationErrors: null,
 }
 
 export const selectUser = (state: RootState) => state.users.user;
 export const selectRegistrationErrors = (state: RootState) => state.users.registrationErrors;
-export const selectAuthenticationErrors = (state: RootState) => state.users.registrationErrors;
+export const selectAuthenticationErrors = (state: RootState) => state.users.authenticationErrors;
 export const selectRegistrationLoading = (state: RootState) => state.users.registrationLoading;
 export const selectAuthenticationLoading = (state: RootState) => state.users.authenticationLoading;
 
@@ -30,7 +30,7 @@ export const usersSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            state.user = null
+            state.user = null;
         },
     },
     extraReducers: (builder) => {
@@ -52,16 +52,16 @@ export const usersSlice = createSlice({
 
             .addCase(authentication.pending, (state) => {
                 state.authenticationLoading = true;
-                state.authenticationErrors = false;
+                state.authenticationErrors = null;
             })
-            .addCase(authentication.fulfilled, (state, {payload}) => {
+            .addCase(authentication.fulfilled, (state, {payload: user}) => {
                 state.authenticationLoading = false;
-                state.authenticationErrors = false;
-                state.user = payload;
+                state.authenticationErrors = null;
+                state.user = user;
             })
-            .addCase(authentication.rejected, (state) => {
+            .addCase(authentication.rejected, (state, {payload: error}) => {
                 state.authenticationLoading = false;
-                state.authenticationErrors = true;
+                state.authenticationErrors = error || null;
             })
     }
 });
