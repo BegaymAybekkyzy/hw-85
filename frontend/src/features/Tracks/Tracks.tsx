@@ -8,6 +8,8 @@ import {selectAlbumInfo} from "../Albums/albumsSlice.ts";
 import Typography from "@mui/material/Typography";
 import Loader from "../../components/UI/Loader/Loader.tsx";
 import TrackCard from "./components/TrackCard.tsx";
+import {selectUser} from "../Users/usersSlice.ts";
+import {addingTrackHistory} from "../TrackHistory/trackHistoryThunks.ts";
 
 const Tracks = () => {
     const dispatch = useAppDispatch();
@@ -15,6 +17,7 @@ const Tracks = () => {
     const tracks = useAppSelector(selectTracks);
     const album = useAppSelector(selectAlbumInfo);
     const loading = useAppSelector(selectFetchLoadingTrack);
+    const user = useAppSelector(selectUser);
 
     useEffect(() => {
         if (albumId) {
@@ -23,7 +26,11 @@ const Tracks = () => {
         }
     }, [dispatch, albumId]);
 
-    let content: React.ReactNode = <h1>No track list</h1>;
+    const addTrackToHistory = async (token: string, trackId: string) => {
+        await dispatch(addingTrackHistory({token, trackId}));
+    }
+
+    let content: React.ReactNode = <Typography variant={"h3"}>No track list</Typography>;
     if (loading) {
         content = (
             <Typography component="div" sx={{height: "80hv", display: "flex", justifyContent: "center"}}>
@@ -34,7 +41,12 @@ const Tracks = () => {
     if (tracks.length > 0 && !loading) {
         content = (
             tracks.map((track) => (
-                <TrackCard key={track._id} track={track}/>
+                <TrackCard
+                    key={track._id}
+                    user={user}
+                    track={track}
+                    addTrackToHistory={addTrackToHistory}
+                />
             ))
         );
     }

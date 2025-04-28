@@ -21,7 +21,7 @@ const Albums = () => {
         }
     }, [artistId]);
 
-    let content: React.ReactNode = <h2>No albums</h2>;
+    let content: React.ReactNode = <Typography variant={"h4"}>No albums</Typography>;
     if (loading) {
         content = (
             <Typography component="div" sx={{height: "80hv", display: "flex", justifyContent: "center"}}>

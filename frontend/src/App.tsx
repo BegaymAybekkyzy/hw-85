@@ -6,6 +6,7 @@ import Albums from "./features/Albums/Albums.tsx";
 import Tracks from "./features/Tracks/Tracks.tsx";
 import Registration from "./features/Users/Registration.tsx";
 import Authentication from "./features/Users/Authentication.tsx";
+import TrackHistoryList from "./features/TrackHistory/TrackHistoryList.tsx";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
                 <Route path="/" element={<ArtistsList/>} />
                 <Route path="/registration" element={<Registration/>} />
                 <Route path="/authentication" element={<Authentication/>} />
+                <Route path="/track-history" element={<TrackHistoryList/>} />
                 <Route path="/artist_albums/:artistId" element={<Albums/>} />
                 <Route path="/album_tracks/:albumId" element={<Tracks/>} />
                 <Route path="*" element={<h1>Not found</h1>} />

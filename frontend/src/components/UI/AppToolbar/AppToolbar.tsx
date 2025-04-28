@@ -50,6 +50,12 @@ const AppToolbar = () => {
                                     open={open}
                                     onClose={handleClose}
                                 >
+                                    <MenuItem onClick={handleClose}>
+                                        <NavLink
+                                            style={{textDecoration: "none", color: "inherit"}}
+                                            to="track-history"
+                                        >Track history</NavLink>
+                                    </MenuItem>
                                     <MenuItem onClick={onLogout}>Logout</MenuItem>
                                 </Menu>
                             </Box>

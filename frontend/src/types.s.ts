@@ -62,3 +62,17 @@ export interface IRegistrationError {
 export interface IError {
     error: string;
 }
+
+export interface ITrackHistory {
+    _id: string;
+    user: string;
+    track: {
+        title: string;
+        album: {
+            artist: {
+                name: string;
+            };
+        };
+    };
+    datetime: string;
+}
