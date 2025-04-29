@@ -83,7 +83,7 @@ const run = async () => {
         {
             album: arianaAlbum1._id,
             title: "Just Like Magic",
-            duration: null,
+            duration: "3:20",
             number: 4,
         },
         {
@@ -96,7 +96,7 @@ const run = async () => {
         {
             album: arianaAlbum2._id,
             title: "Sweetener",
-            duration: null,
+            duration: "3:20",
             number: 1,
         },
         {
@@ -108,7 +108,7 @@ const run = async () => {
         {
             album: arianaAlbum2._id,
             title: "Successful",
-            duration: null,
+            duration: "3:40",
             number: 3,
         },
         {
@@ -146,20 +146,20 @@ const run = async () => {
         {
             album: shakiraAlbum1._id,
             title: "Spy",
-            duration: null,
+            duration: "2:20",
             number: 4,
         },
         {
             album: shakiraAlbum1._id,
             title: "Loba",
-            duration: null,
+            duration: "3:20",
             number: 5,
         },
 
         {
             album: shakiraAlbum2._id,
             title: "Objection (Tango)",
-            duration: null,
+            duration: "3:20",
             number: 1,
         },
         {
@@ -171,7 +171,7 @@ const run = async () => {
         {
             album: shakiraAlbum2._id,
             title: "The One",
-            duration: null,
+            duration: "3:45",
             number: 3,
         },
         {

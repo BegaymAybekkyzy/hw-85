@@ -20,7 +20,7 @@ const trackSchema = new mongoose.Schema({
     },
     duration: {
         type: String,
-        default: null,
+        required: true,
     },
     number: {
         type: Number,

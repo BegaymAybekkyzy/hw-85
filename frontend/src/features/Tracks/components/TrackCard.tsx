@@ -38,11 +38,7 @@ const TrackCard: React.FC<Props> = ({track, user, addTrackToHistory}) => {
 
 
                 <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography sx={{color: 'text.secondary'}}>{
-                        track.duration
-                            ? `duration: ${track.duration}`
-                            : null
-                    }</Typography>
+                    <Typography sx={{color: 'text.secondary'}}>{track.duration}</Typography>
 
                     {user ? <>
                                 <Fab

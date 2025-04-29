@@ -30,7 +30,7 @@ const Tracks = () => {
         await dispatch(addingTrackHistory({token, trackId}));
     }
 
-    let content: React.ReactNode = <Typography variant={"h3"}>No track list</Typography>;
+    let content: React.ReactNode = <Typography variant={"h5"}>No track list</Typography>;
     if (loading) {
         content = (
             <Typography component="div" sx={{height: "80hv", display: "flex", justifyContent: "center"}}>

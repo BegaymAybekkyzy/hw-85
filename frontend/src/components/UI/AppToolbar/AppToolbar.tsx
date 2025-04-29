@@ -1,6 +1,6 @@
 import {AppBar, Grid, Toolbar, Typography, Button, Box, Menu, MenuItem} from "@mui/material";
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
 import {logout, selectUser} from "../../../features/Users/usersSlice.ts";
 import PersonIcon from '@mui/icons-material/Person';
@@ -9,6 +9,7 @@ import React, {useState} from "react";
 const AppToolbar = () => {
     const user = useAppSelector(selectUser);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const [userEl, setUserEl] = useState<null | HTMLElement>(null);
     const open = Boolean(userEl);
@@ -24,6 +25,7 @@ const AppToolbar = () => {
     const onLogout = () => {
         dispatch(logout());
         setUserEl(null);
+        navigate("/");
     }
 
     return (

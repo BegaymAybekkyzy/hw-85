@@ -18,42 +18,30 @@ const TrackHistoryList = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        try {
-            if (error) {
-                navigate("/authentication");
-                dispatch(logout());
-            }
-            const storage = localStorage.getItem("persist:store: users");
-            if (!storage) {
-                navigate("/authentication");
-                dispatch(logout());
-                return;
-            }
+        if (user) {
+            dispatch(fetchTrackHistory(user.token)).unwrap();
+        }
 
-            const parsed = JSON.parse(storage);
-            const userStorage = JSON.parse(parsed.user);
-
-            if (user && userStorage.token !== user.token) {
-                navigate("/authentication");
-                dispatch(logout());
-                return;
-            }
-
-            if (user) {
-                dispatch(fetchTrackHistory(user.token)).unwrap();
-            }
-        }catch (error) {
-            console.error(error);
+        if (error) {
             navigate("/authentication");
             dispatch(logout());
         }
+        const storage = localStorage.getItem("persist:store: users");
+        if (!storage) return;
 
+        const parsed = JSON.parse(storage);
+        const userStorage = JSON.parse(parsed.user);
 
+        if (user && userStorage.token !== user.token) {
+            navigate("/authentication");
+            dispatch(logout());
+            return;
+        }
     }, [dispatch, navigate, user]);
 
-    let content: React.ReactNode = <Typography variant={"h3"}>The story is still blank</Typography>
+    let content: React.ReactNode = <Typography variant={"h5"}>The story is still blank</Typography>
 
-    if(loading) {
+    if (loading) {
         content = (
             <Typography component="div" sx={{height: "80hv", display: "flex", justifyContent: "center"}}>
                 <Loader/>
@@ -64,7 +52,7 @@ const TrackHistoryList = () => {
     if (trackHistory.length > 0) {
         content = (
             trackHistory.map((history) => (
-                <TrackHistoryCard key={history._id} trackHistory={history} />
+                <TrackHistoryCard key={history._id} trackHistory={history}/>
             ))
         );
     }

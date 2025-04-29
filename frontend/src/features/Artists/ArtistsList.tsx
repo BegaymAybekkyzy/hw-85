@@ -16,7 +16,7 @@ const ArtistsList = () => {
             dispatch(fetchAllArtists());
         }, [dispatch]);
 
-        let content: React.ReactNode = <Typography variant={"h3"}>Artist list is empty</Typography>;
+        let content: React.ReactNode = <Typography variant={"h5"}>Artist list is empty</Typography>;
         if (loading) {
             content = (
                 <Typography component="div" sx={{height: "80hv", display: "flex", justifyContent: "center"}}>
