@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {selectUser} from "../Users/usersSlice.ts";
+import {logout, selectUser} from "../Users/usersSlice.ts";
 import {fetchTrackHistory} from "./trackHistoryThunks.ts";
-import {selectTrackHistory, selectTrackHistoryLoading} from "./trackHistorySlice.ts";
+import {selectTrackHistory, selectTrackHistoryError, selectTrackHistoryLoading} from "./trackHistorySlice.ts";
 import Typography from "@mui/material/Typography";
 import Loader from "../../components/UI/Loader/Loader.tsx";
 import TrackHistoryCard from "./components/TrackHistoryCard.tsx";
@@ -12,20 +12,44 @@ const TrackHistoryList = () => {
     const user = useAppSelector(selectUser);
     const trackHistory = useAppSelector(selectTrackHistory);
     const loading = useAppSelector(selectTrackHistoryLoading);
+    const error = useAppSelector(selectTrackHistoryError);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(user) {
-            dispatch(fetchTrackHistory(user.token))
-                .unwrap()
-                .catch((error) => {
-                    if(error.status === 401) {
-                        navigate("/authentication");
-                    }
-                });
+        try {
+            if (error) {
+                navigate("/authentication");
+                dispatch(logout());
+            }
+            const storage = localStorage.getItem("persist:store: users");
+            if (!storage) {
+                navigate("/authentication");
+                dispatch(logout());
+                return;
+            }
+
+            const parsed = JSON.parse(storage);
+            const userStorage = JSON.parse(parsed.user);
+
+            if (user && userStorage.token !== user.token) {
+                navigate("/authentication");
+                dispatch(logout());
+                return;
+            }
+
+            if (user) {
+                dispatch(fetchTrackHistory(user.token)).unwrap();
+            }
+        }catch (error) {
+            console.error(error);
+            navigate("/authentication");
+            dispatch(logout());
         }
-    }, [dispatch]);
+
+
+    }, [dispatch, navigate, user]);
 
     let content: React.ReactNode = <Typography variant={"h3"}>The story is still blank</Typography>
 
