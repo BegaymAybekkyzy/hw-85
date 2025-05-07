@@ -7,12 +7,14 @@ import userRouter from "./routers/users";
 import trackHistoryRouter from "./routers/trackHistory";
 import config from "./config";
 import cors from "cors";
+import adminRouter from "./routers/admin";
 
 const app = express();
-const port = 8000;
+const port = 7000;
 
 app.use(cors());
 app.use(express.json());
+app.use("/admin", adminRouter);
 app.use("/artists", artistRouter);
 app.use("/albums", albumRouter);
 app.use("/tracks", trackRouter);

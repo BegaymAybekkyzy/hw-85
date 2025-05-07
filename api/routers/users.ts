@@ -56,16 +56,15 @@ userRouter.post("/sessions", async (req, res, next) => {
 
 userRouter.delete("/sessions", async (req, res, next) => {
     try {
-        const token = req.headers.authorization;
-
+        const token = req.get("Authorization")?.replace("Bearer ", "");
         if(!token) {
-            res.status(400).send({error: "Token not found"});
+            res.send({message: "Token not found"});
             return;
         }
 
         const user = await User.findOne({token});
         if (!user) {
-            res.status(400).send({error: "User not found"});
+            res.send({message: "User not found"});
             return;
         }
 
