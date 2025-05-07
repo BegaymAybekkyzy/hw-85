@@ -1,5 +1,5 @@
 import express from "express";
-import {imagesUpload} from "../multer";
+import {imagesUpload} from "../middleware/multer";
 import Artist from "../model/Artist";
 import {Error} from "mongoose";
 

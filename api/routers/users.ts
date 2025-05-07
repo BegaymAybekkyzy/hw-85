@@ -41,7 +41,7 @@ userRouter.post("/sessions", async (req, res, next) => {
 
        const isMatch = await user.checkPassword(req.body.password);
 
-       if (!isMatch || !user) {
+       if (!isMatch) {
            res.status(400).send({error: "Invalid password or username"});
            return;
        }
@@ -52,6 +52,29 @@ userRouter.post("/sessions", async (req, res, next) => {
    } catch (error) {
        next(error);
    }
+});
+
+userRouter.delete("/sessions", async (req, res, next) => {
+    try {
+        const token = req.headers.authorization;
+
+        if(!token) {
+            res.status(400).send({error: "Token not found"});
+            return;
+        }
+
+        const user = await User.findOne({token});
+        if (!user) {
+            res.status(400).send({error: "User not found"});
+            return;
+        }
+
+        user.generateToken();
+        await user.save();
+        res.send({message: "Successful logout"});
+    }catch (err) {
+        next(err);
+    }
 });
 
 export default userRouter;

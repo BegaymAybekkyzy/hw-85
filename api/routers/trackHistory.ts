@@ -1,28 +1,16 @@
 import express from "express";
-import User from "../model/User";
 import TrackHistory from "../model/TrackHistory";
 import {Error} from "mongoose";
+import authentication, {RequestWithUser} from "../middleware/authentication";
 
 const trackHistoryRouter = express.Router();
 
-trackHistoryRouter.post("/", async (req, res, next) => {
+trackHistoryRouter.post("/", authentication, async (req, res, next) => {
     try {
-        const token = req.get("Authorization");
-        if (!token) {
-            res.status(401).send({error: "Unauthorized"});
-            return;
-        }
-
-        const user = await User.findOne({token});
-
-        if (!user) {
-            res.status(401).send({error: "Unauthorized"});
-            return;
-        }
+        const user = (req as RequestWithUser).user;
 
         const newTrackHistory = new TrackHistory({
             user,
-            token,
             track: req.body.track,
             datetime: new Date().toISOString(),
         });
@@ -38,21 +26,9 @@ trackHistoryRouter.post("/", async (req, res, next) => {
     }
 });
 
-trackHistoryRouter.get("/", async (req, res, next) => {
+trackHistoryRouter.get("/",authentication, async (req, res, next) => {
     try {
-        const token = req.get("Authorization");
-        if (!token) {
-            res.status(401).send({error: "Unauthorized"});
-            return;
-        }
-
-        const user = await User.findOne({token});
-
-        if (!user) {
-            res.status(401).send({error: "Unauthorized"});
-            return;
-        }
-
+        const user = (req as RequestWithUser).user;
         const trackHistory = await TrackHistory.find({user: user._id}).populate({
             path: "track",
             populate: {

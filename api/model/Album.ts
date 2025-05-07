@@ -14,21 +14,23 @@ const albumSchema = new mongoose.Schema({
             message: "Artist not found"
         },
     },
-
     title: {
         type: String,
         required: true,
     },
-
     album_year: {
         type: Number,
         required: true,
     },
-
     cover: {
         type: String,
         default: null,
     },
+    isPublished: {
+        type: Boolean,
+        required: true,
+        default: false,
+    }
 });
 
 const Album = mongoose.model("Album", albumSchema);

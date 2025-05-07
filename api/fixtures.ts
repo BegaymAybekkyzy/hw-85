@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import config from "./config";
-import {randomUUID} from "node:crypto";
 import User from "./model/User";
 import Artist from "./model/Artist";
 import Album from "./model/Album";
@@ -25,12 +24,14 @@ const run = async () => {
         {
             name: "Ariana Grande",
             photo: "photos/d4c7d947-a249-4588-9db3-f35c844cae23.jpeg",
-            info: "Ariana is an American singer, songwriter, and actress."
+            info: "Ariana is an American singer, songwriter, and actress.",
+            isPublished: true,
         },
         {
             name: "Shakira",
             photo: "photos/b06d56b2-196b-411a-9834-70f72a64fdf0.jpeg",
             info: null,
+            isPublished: true,
         },
     );
 
@@ -40,24 +41,28 @@ const run = async () => {
             title: "Positions",
             album_year: 2020,
             cover: "covers/70523424-34ae-4c28-897a-1180139e9f71.jpg",
+            isPublished: true,
         },
         {
             artist: ariana._id,
             title: "Sweetener",
             album_year: 2018,
             cover: "covers/fe21513b-6707-43c3-b747-34aec01fa226.jpg",
+            isPublished: true,
         },
         {
             artist: shakira._id,
             title: "She Wolf",
             album_year: 2009,
             cover: "covers/c7daa49c-63e4-4770-b051-ed7902308202.jpeg",
+            isPublished: true,
         },
         {
             artist: shakira._id,
             title: "Laundry Service",
             album_year: 2001,
             cover: "covers/08f6947d-fe0d-4966-bae4-7bff70b1a4c5.jpg",
+            isPublished: true,
         }
     );
 
@@ -67,30 +72,35 @@ const run = async () => {
             title: "shut up",
             duration: "3:45",
             number: 1,
+            isPublished: true,
         },
         {
             album: arianaAlbum1._id,
             title: "Motive",
             duration: "3:47",
             number: 2,
+            isPublished: true,
         },
         {
             album: arianaAlbum1._id,
             title: "34+35",
             duration: "3:20",
             number: 3,
+            isPublished: true,
         },
         {
             album: arianaAlbum1._id,
             title: "Just Like Magic",
             duration: "3:20",
             number: 4,
+            isPublished: true,
         },
         {
             album: arianaAlbum1._id,
             title: "Positions",
             duration: "3:45",
             number: 5,
+            isPublished: true,
         },
 
         {
@@ -98,30 +108,35 @@ const run = async () => {
             title: "Sweetener",
             duration: "3:20",
             number: 1,
+            isPublished: true,
         },
         {
             album: arianaAlbum2._id,
             title: "Everytime",
             duration: "3:45",
             number: 2,
+            isPublished: true,
         },
         {
             album: arianaAlbum2._id,
             title: "Successful",
             duration: "3:40",
             number: 3,
+            isPublished: true,
         },
         {
             album: arianaAlbum2._id,
             title: "Better Off",
             duration: "3:47",
             number: 4,
+            isPublished: true,
         },
         {
             album: arianaAlbum2._id,
             title: "Raindrops (An Angel Cried)",
             duration: "3:45",
             number: 5,
+            isPublished: true,
         },
 
         //---------------------------------------------------------
@@ -130,30 +145,35 @@ const run = async () => {
             title: "She Wolf",
             duration: "3:45",
             number: 1,
+            isPublished: true,
         },
         {
             album: shakiraAlbum1._id,
             title: "Did It Again",
             duration: "3:45",
             number: 2,
+            isPublished: true,
         },
         {
             album: shakiraAlbum1._id,
             title: "Why Wait",
             duration: "3:45",
             number: 3,
+            isPublished: true,
         },
         {
             album: shakiraAlbum1._id,
             title: "Spy",
             duration: "2:20",
             number: 4,
+            isPublished: true,
         },
         {
             album: shakiraAlbum1._id,
             title: "Loba",
             duration: "3:20",
             number: 5,
+            isPublished: true,
         },
 
         {
@@ -161,43 +181,50 @@ const run = async () => {
             title: "Objection (Tango)",
             duration: "3:20",
             number: 1,
+            isPublished: true,
         },
         {
             album: shakiraAlbum2._id,
             title: "Rules",
             duration: "3:45",
             number: 2,
+            isPublished: true,
         },
         {
             album: shakiraAlbum2._id,
             title: "The One",
             duration: "3:45",
             number: 3,
+            isPublished: true,
         },
         {
             album: shakiraAlbum2._id,
             title: "Ready For The Good Times",
             duration: "3:45",
             number: 4,
+            isPublished: true,
         },
         {
             album: shakiraAlbum2._id,
             title: "Eyes Like Yours",
             duration: "3:45",
             number: 5,
+            isPublished: true,
         },
     );
 
     const [testUser1, testUser2] = await User.create(
         {
             username: "Bob",
-            password: "baba",
-            token: randomUUID(),
+            password: "123",
+            role: "user",
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODFiNWQ2YjAwNDEyNjhlN2E0NjgzNzEiLCJpYXQiOjE3NDY2MjM4NTEsImV4cCI6MTc0OTIxNTg1MX0.IhJ2CnVhxm_7U9sKGIZokNotOOPsuEcqAxWkFIm-CTI",
         },
         {
             username: "Alice",
-            password: "baba",
-            token: randomUUID(),
+            password: "123",
+            role: "admin",
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODFiM2Q2YjAwNDEyNjhlN2E0NjgzNjciLCJpYXQiOjE3NDY2MTU3NTYsImV4cCI6MTc0OTIwNzc1Nn0.IASOw4JU2OoJ1w0I_56gzfbQYR7Ehi5Qtp0X_2pMCKU",
         },
     );
 
