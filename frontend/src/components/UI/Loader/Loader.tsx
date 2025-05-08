@@ -1,9 +1,7 @@
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Loader = () => {
-    return (
-        <CircularProgress color="inherit" />
-    );
+  return <CircularProgress color="inherit" />;
 };
 
 export default Loader;
