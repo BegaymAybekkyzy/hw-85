@@ -1,4 +1,4 @@
-import {IAlbumApi} from "../../types.s.ts";
+import {IAlbumApi} from "../../types";
 import {RootState} from "../../app/store.ts";
 import {createSlice} from "@reduxjs/toolkit";
 import {fetchAlbumsByArtist, fetchAlbumsById} from "./albumsThunks.ts";

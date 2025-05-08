@@ -2,9 +2,10 @@ import {AppBar, Grid, Toolbar, Typography, Button, Box, Menu, MenuItem} from "@m
 import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import {NavLink, useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
-import {logout, selectUser} from "../../../features/Users/usersSlice.ts";
+import {systemLogout, selectUser} from "../../../features/Users/usersSlice.ts";
 import PersonIcon from '@mui/icons-material/Person';
 import React, {useState} from "react";
+import {logout} from "../../../features/Users/userThunks.ts";
 
 const AppToolbar = () => {
     const user = useAppSelector(selectUser);
@@ -22,8 +23,9 @@ const AppToolbar = () => {
         setUserEl(null);
     };
 
-    const onLogout = () => {
-        dispatch(logout());
+    const onLogout = async () => {
+        await dispatch(logout());
+        dispatch(systemLogout());
         setUserEl(null);
         navigate("/");
     }
@@ -58,6 +60,14 @@ const AppToolbar = () => {
                                             to="track-history"
                                         >Track history</NavLink>
                                     </MenuItem>
+                                    {user.role === "admin" && (
+                                        <MenuItem onClick={handleClose}>
+                                            <NavLink
+                                                style={{textDecoration: "none", color: "inherit"}}
+                                                to="/admin"
+                                            >Admin Menu</NavLink>
+                                        </MenuItem>
+                                    )}
                                     <MenuItem onClick={onLogout}>Logout</MenuItem>
                                 </Menu>
                             </Box>

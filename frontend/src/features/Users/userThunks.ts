@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosAPI from "../../axiosAPI.ts";
-import {IError, IRegistrationError, IUser, IUserForm} from "../../types.s.ts";
+import {IError, IRegistrationError, IUser, IUserForm} from "../../types";
 import {isAxiosError} from "axios";
 
 export const registration = createAsyncThunk<
@@ -40,3 +40,10 @@ export const authentication = createAsyncThunk<
         }
     }
 );
+
+export const logout = createAsyncThunk<void, void>(
+    "users/logout",
+    async () => {
+        await axiosAPI.delete("users/sessions");
+    }
+)

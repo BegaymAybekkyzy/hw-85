@@ -7,7 +7,9 @@ const adminAlbumRouter = express.Router();
 
 adminAlbumRouter.get("/", async (_req, res, next) => {
     try {
-        const albums = await Album.find();
+        const albums = await Album.find().populate([
+            {path: "artist"}, {path: "user", select: "username"}
+        ]);
         res.send(albums);
     } catch (err) {
         next(err);

@@ -8,7 +8,10 @@ const adminArtistRouter = express.Router();
 
 adminArtistRouter.get("/", async (_req, res, next) => {
     try {
-        const artists = await Artist.find();
+        const artists = await Artist.find().populate({
+            path: "user",
+            select: "username"
+        });
         res.send(artists);
     } catch (err) {
         next(err);

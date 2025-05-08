@@ -1,5 +1,5 @@
 import React from 'react';
-import {IArtistAPI} from "../../../types.s.ts";
+import {IArtistAPI} from "../../../types";
 import {Typography, Button, CardMedia, CardContent, CardActions, Card} from '@mui/material';
 import {BASE_URL} from "../../../constants.ts";
 import {useNavigate} from "react-router-dom";

@@ -26,8 +26,8 @@ const Tracks = () => {
         }
     }, [dispatch, albumId]);
 
-    const addTrackToHistory = async (token: string, trackId: string) => {
-        await dispatch(addingTrackHistory({token, trackId}));
+    const addTrackToHistory = async (trackId: string) => {
+        await dispatch(addingTrackHistory(trackId));
     }
 
     let content: React.ReactNode = <Typography variant={"h5"}>No track list</Typography>;

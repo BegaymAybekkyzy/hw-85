@@ -1,12 +1,12 @@
 import React from 'react';
-import {ITrackApi, IUser} from "../../../types.s.ts";
+import {ITrackApi, IUser} from "../../../types";
 import {Typography, Box, Grid, Card, Fab} from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 interface Props {
     track: ITrackApi;
     user: IUser | null;
-    addTrackToHistory: (token: string, trackId: string) => void;
+    addTrackToHistory: (trackId: string) => void;
 }
 
 const TrackCard: React.FC<Props> = ({track, user, addTrackToHistory}) => {
@@ -42,7 +42,7 @@ const TrackCard: React.FC<Props> = ({track, user, addTrackToHistory}) => {
 
                     {user ? <>
                                 <Fab
-                                    onClick={() => addTrackToHistory(user.token, track._id)}
+                                    onClick={() => addTrackToHistory(track._id)}
                                     sx={{color: "#008B8B", marginLeft: "30px"}}
                                 ><PlayArrowIcon/>
                                 </Fab>

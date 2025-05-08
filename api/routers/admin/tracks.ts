@@ -6,7 +6,10 @@ const adminTrackRouter = express.Router();
 
 adminTrackRouter.get("/", async (_req, res, next) => {
     try {
-        const tracks = await Track.find();
+        const tracks = await Track.find().populate([
+            {path: "album", populate: {path: "artist", select: "name"}},
+            {path: "user", select: "username"}
+        ]);
         res.send(tracks);
     } catch (err) {
         next(err);

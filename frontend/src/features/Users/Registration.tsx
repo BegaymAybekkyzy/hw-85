@@ -3,7 +3,7 @@ import {Box, Button, Grid, TextField} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {selectRegistrationErrors, selectRegistrationLoading} from "./usersSlice.ts";
 import {registration} from "./userThunks.ts";
-import {IUserForm} from "../../types.s.ts";
+import {IUserForm} from "../../types";
 import Typography from "@mui/material/Typography";
 import {useNavigate} from "react-router-dom";
 

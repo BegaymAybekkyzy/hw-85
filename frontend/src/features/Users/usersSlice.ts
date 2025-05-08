@@ -1,4 +1,4 @@
-import {IError, IRegistrationError, IUser} from "../../types.s.ts";
+import {IError, IRegistrationError, IUser} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
 import {authentication, registration} from "./userThunks.ts";
 import {RootState} from "../../app/store.ts";
@@ -29,7 +29,7 @@ export const usersSlice = createSlice({
     name: "users",
     initialState,
     reducers: {
-        logout: (state) => {
+        systemLogout: (state) => {
             state.user = null;
         },
     },
@@ -67,4 +67,4 @@ export const usersSlice = createSlice({
 });
 
 export const userReducer = usersSlice.reducer;
-export const {logout} = usersSlice.actions;
+export const {systemLogout} = usersSlice.actions;

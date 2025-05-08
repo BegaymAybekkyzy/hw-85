@@ -1,4 +1,4 @@
-import {IArtistAPI} from "../../types.s.ts";
+import {IArtistAPI} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
 import {fetchAllArtists} from "./artistsThunks.ts";
 import {RootState} from "../../app/store.ts";

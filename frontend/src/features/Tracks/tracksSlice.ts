@@ -1,6 +1,6 @@
 import {RootState} from "../../app/store.ts";
 import {createSlice} from "@reduxjs/toolkit";
-import { ITrackApi} from "../../types.s.ts";
+import { ITrackApi} from "../../types";
 import {fetchTracksByAlbum} from "./tracksThunks.ts";
 
 interface TrackState {

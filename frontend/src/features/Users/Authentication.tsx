@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {authentication} from "./userThunks.ts";
 import Typography from "@mui/material/Typography";
 import {Box, Button, Grid, TextField} from "@mui/material";
-import {IUserForm} from "../../types.s.ts";
+import {IUserForm} from "../../types";
 
 const Authentication = () => {
     const [form, setForm] = useState<IUserForm>({

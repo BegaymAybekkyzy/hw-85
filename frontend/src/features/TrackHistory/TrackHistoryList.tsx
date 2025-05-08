@@ -1,45 +1,21 @@
 import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {logout, selectUser} from "../Users/usersSlice.ts";
-import {fetchTrackHistory} from "./trackHistoryThunks.ts";
-import {selectTrackHistory, selectTrackHistoryError, selectTrackHistoryLoading} from "./trackHistorySlice.ts";
+import {selectTrackHistory, selectTrackHistoryLoading} from "./trackHistorySlice.ts";
 import Typography from "@mui/material/Typography";
 import Loader from "../../components/UI/Loader/Loader.tsx";
 import TrackHistoryCard from "./components/TrackHistoryCard.tsx";
-import {useNavigate} from "react-router-dom";
+import {fetchTrackHistory} from "./trackHistoryThunks.ts";
 
 const TrackHistoryList = () => {
-    const user = useAppSelector(selectUser);
     const trackHistory = useAppSelector(selectTrackHistory);
     const loading = useAppSelector(selectTrackHistoryLoading);
-    const error = useAppSelector(selectTrackHistoryError);
-
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user) {
-            dispatch(fetchTrackHistory(user.token)).unwrap();
-        }
-
-        if (error) {
-            navigate("/authentication");
-            dispatch(logout());
-        }
-        const storage = localStorage.getItem("persist:store: users");
-        if (!storage) return;
-
-        const parsed = JSON.parse(storage);
-        const userStorage = JSON.parse(parsed.user);
-
-        if (user && userStorage.token !== user.token) {
-            navigate("/authentication");
-            dispatch(logout());
-            return;
-        }
-    }, [dispatch, navigate, user]);
 
     let content: React.ReactNode = <Typography variant={"h5"}>The story is still blank</Typography>
+
+    useEffect(() => {
+        dispatch(fetchTrackHistory());
+    }, [dispatch]);
 
     if (loading) {
         content = (

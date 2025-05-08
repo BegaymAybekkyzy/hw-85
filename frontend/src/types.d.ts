@@ -9,6 +9,19 @@ export interface IArtistAPI {
     name: string;
     info: string;
     photo: string;
+    isPublished: boolean;
+}
+
+export interface IArtistAdmin {
+    _id: string;
+    name: string;
+    user: {
+        _id: string;
+        username: string;
+    }
+    info: string;
+    photo: string;
+    isPublished: boolean;
 }
 
 export interface IAlbumForm {
@@ -24,6 +37,20 @@ export interface IAlbumApi {
     album_year: number;
     title: string;
     cover: string;
+    isPublished: boolean;
+}
+
+export interface IAlbumAdmin {
+    _id: string;
+    user: {
+        _id: string;
+        username: string;
+    }
+    artist: IArtistAPI;
+    album_year: number;
+    title: string;
+    cover: string;
+    isPublished: boolean;
 }
 
 export interface ITrackForm {
@@ -35,6 +62,26 @@ export interface ITrackForm {
 export interface ITrackApi extends ITrackForm {
    _id: string;
     number: string;
+    isPublished: boolean;
+}
+
+export interface ITrackAdmin {
+    _id: string;
+    user: {
+        _id: string;
+        username: string;
+    }
+    album: {
+        _id: string;
+        title: string;
+        artist: {
+            _id: string;
+            name: string;
+        }
+    },
+    isPublished: boolean;
+    duration: string;
+    title: string;
 }
 
 export interface IUserForm {
@@ -45,6 +92,7 @@ export interface IUserForm {
 export interface IUser {
     _id: string;
     username: string;
+    role: string;
     token: string;
 }
 export interface IRegistrationError {

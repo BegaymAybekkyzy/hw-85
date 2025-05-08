@@ -7,8 +7,16 @@ import Tracks from "./features/Tracks/Tracks.tsx";
 import Registration from "./features/Users/Registration.tsx";
 import Authentication from "./features/Users/Authentication.tsx";
 import TrackHistoryList from "./features/TrackHistory/TrackHistoryList.tsx";
+import ProtectedRoute from "./components/UI/ProtectedRoute/ProtectedRoute.tsx";
+import {useAppSelector} from "./app/hooks.ts";
+import {selectUser} from "./features/Users/usersSlice.ts";
+import ArtistAdminList from "./features/Admin/artists/ArtistAdminList.tsx";
+import AlbumAdminList from "./features/Admin/albums/AlbumAdminList.tsx";
+import TrackAdminList from "./features/Admin/tracks/TrackAdminList.tsx";
+import Admin from "./features/Admin/Admin.tsx";
 
 const App = () => {
+    const user = useAppSelector(selectUser);
   return (
     <>
         <header>
@@ -16,10 +24,22 @@ const App = () => {
         </header>
         <Container>
             <Routes>
+                <Route path="admin" element={
+                    <ProtectedRoute isAllowed={user && user.role === 'admin'}>
+                       <Admin/>
+                    </ProtectedRoute>
+                }>
+                    <Route path="artists" element={<ArtistAdminList/>}/>
+                    <Route path="albums" element={<AlbumAdminList/>}/>
+                    <Route path="tracks" element={<TrackAdminList/>}/>
+                </Route>
+
                 <Route path="/" element={<ArtistsList/>} />
                 <Route path="/registration" element={<Registration/>} />
                 <Route path="/authentication" element={<Authentication/>} />
-                <Route path="/track-history" element={<TrackHistoryList/>} />
+                <Route path="/track-history" element={<ProtectedRoute isAllowed={Boolean(user)}>
+                    <TrackHistoryList/>
+                </ProtectedRoute>} />
                 <Route path="/artist_albums/:artistId" element={<Albums/>} />
                 <Route path="/album_tracks/:albumId" element={<Tracks/>} />
                 <Route path="*" element={<h1>Not found</h1>} />

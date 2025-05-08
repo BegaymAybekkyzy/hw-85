@@ -6,6 +6,11 @@ import {userReducer} from "../features/Users/usersSlice.ts";
 import storage from 'redux-persist/lib/storage';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore} from "redux-persist";
 import {trackHistoryReducer} from "../features/TrackHistory/trackHistorySlice.ts";
+import axiosAPI from "../axiosAPI.ts";
+import {AxiosHeaders, InternalAxiosRequestConfig} from "axios";
+import {albumsAdminReducer} from "../features/Admin/albums/albumsAdminSlice.ts";
+import {artistsAdminReducer} from "../features/Admin/artists/artistsAdminSLice.ts";
+import {tracksAdminReducer} from "../features/Admin/tracks/tracksAdminSlice.ts";
 
 const userConfig = {
     key: "store: users",
@@ -14,6 +19,9 @@ const userConfig = {
 }
 
 const rootReducer = combineReducers({
+    albumsAdmin: albumsAdminReducer,
+    artistsAdmin: artistsAdminReducer,
+    tracksAdmin: tracksAdminReducer,
     artists: artistsReducer,
     albums: albumsReducer,
     tracks: trackReducer,
@@ -28,9 +36,19 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE]
             }
-        })
+        }),
 });
 
 export const persistor = persistStore(store);
+
+axiosAPI.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    const token = store.getState().users.user?.token;
+    if (!token) return config;
+
+    const headers = config.headers as AxiosHeaders;
+    headers.set("Authorization", "Bearer " + token);
+    return config;
+});
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

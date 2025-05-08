@@ -1,6 +1,6 @@
 import React from 'react';
 import {Typography, Box, Grid, Card} from '@mui/material';
-import {ITrackHistory} from "../../../types.s.ts";
+import {ITrackHistory} from "../../../types";
 import dayjs from 'dayjs';
 
 interface Props {

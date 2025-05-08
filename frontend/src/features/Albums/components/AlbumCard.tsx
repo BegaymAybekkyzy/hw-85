@@ -1,5 +1,5 @@
 import React from 'react';
-import {IAlbumApi} from "../../../types.s.ts";
+import {IAlbumApi} from "../../../types";
 import {Typography, Button, CardMedia, CardContent, CardActions, Card} from '@mui/material';
 import {BASE_URL} from "../../../constants.ts";
 import NoImage from "../../../assets/no_Image.jpg"
