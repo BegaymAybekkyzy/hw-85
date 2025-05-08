@@ -1,11 +1,14 @@
-import React, { useEffect } from 'react';
-import Typography from '@mui/material/Typography';
-import Loader from '../../components/UI/Loader/Loader.tsx';
-import { Grid } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectFetchLoadingArtist, selectUnpublishedArtists } from './artistsSlice.ts';
-import { fetchUnpublishedArtists } from './artistsThunks.ts';
-import ArtistItem from './copmonents/ArtistItem.tsx';
+import React, { useEffect } from "react";
+import Typography from "@mui/material/Typography";
+import Loader from "../../components/UI/Loader/Loader.tsx";
+import { Grid } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
+import {
+  selectFetchLoadingArtist,
+  selectUnpublishedArtists,
+} from "./artistsSlice.ts";
+import { fetchUnpublishedArtists } from "./artistsThunks.ts";
+import ArtistItem from "./copmonents/ArtistItem.tsx";
 
 const UnpublishedArtists = () => {
   const dispatch = useAppDispatch();
@@ -35,14 +38,18 @@ const UnpublishedArtists = () => {
       <Grid container spacing={2}>
         {unpublishedArtists.map((artist) => (
           <Grid key={artist._id}>
-            <ArtistItem artist={artist}/>
+            <ArtistItem artist={artist} />
           </Grid>
         ))}
       </Grid>
     );
   }
 
-  return <div>{content}</div>;
+  return (
+    <div style={{ maxHeight: "33vh", overflowX: "auto", paddingBottom: 10 }}>
+      {content}
+    </div>
+  );
 };
 
 export default UnpublishedArtists;

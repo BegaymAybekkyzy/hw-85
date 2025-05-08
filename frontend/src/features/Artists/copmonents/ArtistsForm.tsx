@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Button, Grid, TextField } from '@mui/material';
-import FileInput from '../../../components/UI/FileInput/FileInput.tsx';
-import { IArtistForm } from '../../../types';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { useNavigate } from 'react-router-dom';
-import { addArtist } from '../artistsThunks.ts';
-import { selectCreateLoadingArtist } from '../artistsSlice.ts';
+import React, { useState } from "react";
+import { Button, Grid, TextField } from "@mui/material";
+import FileInput from "../../../components/UI/FileInput/FileInput.tsx";
+import { IArtistForm } from "../../../types";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { useNavigate } from "react-router-dom";
+import { addArtist } from "../artistsThunks.ts";
+import { selectCreateLoadingArtist } from "../artistsSlice.ts";
 
 const ArtistsForm = () => {
   const loading = useAppSelector(selectCreateLoadingArtist);
@@ -13,32 +13,30 @@ const ArtistsForm = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState<IArtistForm>({
-    name: '',
-    info: '',
+    name: "",
+    info: "",
     photo: null,
   });
 
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log(form);
     await dispatch(addArtist(form));
-    navigate('/');
+    navigate("/");
   };
 
   const fileInputChangeHandler = (
     eFile: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const {files} = eFile.target;
+    const { files } = eFile.target;
 
     if (files) {
-      setForm((prev) => ({...prev, photo: files[0]}));
+      setForm((prev) => ({ ...prev, photo: files[0] }));
     }
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setForm({...form, [name]: value});
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   return (
@@ -52,7 +50,8 @@ const ArtistsForm = () => {
             required
             disabled={loading}
             onChange={onChangeInput}
-            variant="outlined"/>
+            variant="outlined"
+          />
         </Grid>
         <Grid size={9}>
           <TextField
@@ -63,7 +62,8 @@ const ArtistsForm = () => {
             multiline
             name="info"
             onChange={onChangeInput}
-            variant="outlined"/>
+            variant="outlined"
+          />
         </Grid>
         <Grid size={9}>
           <FileInput
@@ -76,10 +76,12 @@ const ArtistsForm = () => {
         <Grid size={9}>
           <Button
             variant="contained"
-            sx={{backgroundColor: '#5F9EA0'}}
+            sx={{ backgroundColor: "#5F9EA0" }}
             type="submit"
             disabled={loading}
-          >Add</Button>
+          >
+            Add
+          </Button>
         </Grid>
       </Grid>
     </form>

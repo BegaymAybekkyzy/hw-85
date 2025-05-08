@@ -14,9 +14,10 @@ import ArtistAdminList from "./features/Admin/artists/ArtistAdminList.tsx";
 import AlbumAdminList from "./features/Admin/albums/AlbumAdminList.tsx";
 import TrackAdminList from "./features/Admin/tracks/TrackAdminList.tsx";
 import Admin from "./features/Admin/Admin.tsx";
-import UnpublishedList from './features/Users/UnpublishedList.tsx';
-import AddArtist from './features/Artists/AddArtist.tsx';
-import AddAlbum from './features/Albums/AddAlbum.tsx';
+import UnpublishedList from "./features/Users/UnpublishedList.tsx";
+import AddArtist from "./features/Artists/AddArtist.tsx";
+import AddAlbum from "./features/Albums/AddAlbum.tsx";
+import AddTrack from "./features/Tracks/AddTrack.tsx";
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -53,6 +54,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/track-history"
             element={
@@ -61,6 +63,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/add-artist"
             element={
@@ -69,6 +72,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/add-album"
             element={
@@ -77,6 +81,16 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/add-track"
+            element={
+              <ProtectedRoute isAllowed={Boolean(user)}>
+                <AddTrack />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<h1>Not found</h1>} />
         </Routes>
       </Container>

@@ -51,7 +51,10 @@ const AppToolbar = () => {
         <Grid container spacing={2} alignItems="center">
           <Grid>
             <Typography variant="h6">
-              <NavLink style={{ color: "white", textDecoration: "none" }} to="/">
+              <NavLink
+                style={{ color: "white", textDecoration: "none" }}
+                to="/"
+              >
                 <div
                   style={{
                     display: "flex",
@@ -65,22 +68,31 @@ const AppToolbar = () => {
               </NavLink>
             </Typography>
           </Grid>
-          <Grid >
+          <Grid>
             <Button
-              sx={{color: 'white'}}
+              sx={{ color: "white" }}
               component={NavLink}
               to={"/add-artist"}
             >
               Add artist
             </Button>
           </Grid>
-          <Grid >
+          <Grid>
             <Button
-              sx={{color: 'white'}}
+              sx={{ color: "white" }}
               component={NavLink}
               to={"/add-album"}
             >
               Add album
+            </Button>
+          </Grid>
+          <Grid>
+            <Button
+              sx={{ color: "white" }}
+              component={NavLink}
+              to={"/add-track"}
+            >
+              Add track
             </Button>
           </Grid>
         </Grid>

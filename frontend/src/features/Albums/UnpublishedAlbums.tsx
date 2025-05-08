@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   selectAlbumUnpublished,
-  selectFetchLoadingAlbum
-} from './albumsSlice.ts';
-import { fetchUnpublishedAlbums } from './albumsThunks.ts';
-import Typography from '@mui/material/Typography';
-import Loader from '../../components/UI/Loader/Loader.tsx';
-import { Grid } from '@mui/material';
-import AlbumItem from './components/AlbumItem.tsx';
+  selectFetchLoadingAlbum,
+} from "./albumsSlice.ts";
+import { fetchUnpublishedAlbums } from "./albumsThunks.ts";
+import Typography from "@mui/material/Typography";
+import Loader from "../../components/UI/Loader/Loader.tsx";
+import { Grid } from "@mui/material";
+import AlbumItem from "./components/AlbumItem.tsx";
 
 const UnpublishedAlbums = () => {
   const dispatch = useAppDispatch();
@@ -16,11 +16,13 @@ const UnpublishedAlbums = () => {
   const loading = useAppSelector(selectFetchLoadingAlbum);
 
   useEffect(() => {
-      dispatch(fetchUnpublishedAlbums());
+    dispatch(fetchUnpublishedAlbums());
   }, [dispatch]);
 
   let content: React.ReactNode = (
-    <Typography variant={"h5"}>Your list of unpublished albums is empty</Typography>
+    <Typography variant={"h5"}>
+      Your list of unpublished albums is empty
+    </Typography>
   );
 
   if (loading) {
@@ -47,7 +49,7 @@ const UnpublishedAlbums = () => {
   }
 
   return (
-    <div>
+    <div style={{ maxHeight: "34vh", overflowX: "auto", paddingBottom: 10 }}>
       {content}
     </div>
   );
