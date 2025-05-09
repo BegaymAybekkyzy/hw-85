@@ -1,7 +1,12 @@
-import { IAlbumApi} from '../../types';
+import { IAlbumApi } from "../../types";
 import { RootState } from "../../app/store.ts";
 import { createSlice } from "@reduxjs/toolkit";
-import { addAlbum, fetchAlbumsByArtist, fetchAlbumsById, fetchUnpublishedAlbums } from './albumsThunks.ts';
+import {
+  addAlbum,
+  fetchAlbumsByArtist,
+  fetchAlbumsById,
+  fetchUnpublishedAlbums,
+} from "./albumsThunks.ts";
 
 interface AlbumsState {
   albumsByArtist: IAlbumApi[];
@@ -27,8 +32,10 @@ export const selectFetchLoadingAlbum = (state: RootState) =>
   state.albums.fetchLoading;
 export const selectArtistName = (state: RootState) => state.albums.artistName;
 export const selectAlbumInfo = (state: RootState) => state.albums.albumsInfo;
-export const selectAlbumUnpublished = (state: RootState) => state.albums.unpublishedAlbums;
-export const selectAlbumCreateLoading = (state: RootState) => state.albums.createLoading;
+export const selectAlbumUnpublished = (state: RootState) =>
+  state.albums.unpublishedAlbums;
+export const selectAlbumCreateLoading = (state: RootState) =>
+  state.albums.createLoading;
 
 export const albumsSlice = createSlice({
   name: "albums",
@@ -81,7 +88,7 @@ export const albumsSlice = createSlice({
       })
       .addCase(fetchUnpublishedAlbums.rejected, (state) => {
         state.fetchLoading = false;
-      })
+      });
   },
 });
 

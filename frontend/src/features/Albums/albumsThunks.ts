@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IAlbumApi, IAlbumForm } from '../../types';
+import { IAlbumApi, IAlbumForm } from "../../types";
 import axiosAPI from "../../axiosAPI.ts";
 
 export const fetchAlbumsByArtist = createAsyncThunk<IAlbumApi[], string>(
@@ -19,26 +19,26 @@ export const fetchAlbumsById = createAsyncThunk<IAlbumApi, string>(
 );
 
 export const addAlbum = createAsyncThunk<void, IAlbumForm>(
-  'albums/addAlbum',
+  "albums/addAlbum",
   async (newAlbum) => {
-     const formData = new FormData();
-     const keys = Object.keys(newAlbum) as (keyof IAlbumForm)[];
+    const formData = new FormData();
+    const keys = Object.keys(newAlbum) as (keyof IAlbumForm)[];
 
-     keys.forEach(key => {
-       const value = newAlbum[key] as string;
-       if (value !== null) {
-         formData.append(key, value);
-       }
-     });
+    keys.forEach((key) => {
+      const value = newAlbum[key] as string;
+      if (value !== null) {
+        formData.append(key, value);
+      }
+    });
 
-     await axiosAPI.post('albums', formData);
-  }
+    await axiosAPI.post("albums", formData);
+  },
 );
 
 export const fetchUnpublishedAlbums = createAsyncThunk<IAlbumApi[], void>(
-  'albums/fetchUnpublishedAlbums',
+  "albums/fetchUnpublishedAlbums",
   async () => {
-    const response = await axiosAPI.get('albums/user');
+    const response = await axiosAPI.get("albums/user");
     return response.data;
   },
 );

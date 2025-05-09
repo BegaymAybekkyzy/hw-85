@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks.ts';
-import { useNavigate } from 'react-router-dom';
-import { IAlbumForm, IArtistAPI } from '../../../types';
-import { Button, Grid, MenuItem, TextField } from '@mui/material';
-import FileInput from '../../../components/UI/FileInput/FileInput.tsx';
-import { selectAlbumCreateLoading } from '../albumsSlice.ts';
-import { addAlbum } from '../albumsThunks.ts';
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
+import { useNavigate } from "react-router-dom";
+import { IAlbumForm, IArtistAPI } from "../../../types";
+import { Button, Grid, MenuItem, TextField } from "@mui/material";
+import FileInput from "../../../components/UI/FileInput/FileInput.tsx";
+import { selectAlbumCreateLoading } from "../albumsSlice.ts";
+import { addAlbum } from "../albumsThunks.ts";
 
 interface Props {
-  artists: IArtistAPI[]
+  artists: IArtistAPI[];
 }
 
-const AlbumForm: React.FC<Props> = ({artists}) => {
+const AlbumForm: React.FC<Props> = ({ artists }) => {
   const loading = useAppSelector(selectAlbumCreateLoading);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [form, setForm] = useState<IAlbumForm>({
-    artist: '',
+    artist: "",
     album_year: 0,
     title: "",
     cover: null,
@@ -26,22 +26,22 @@ const AlbumForm: React.FC<Props> = ({artists}) => {
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await dispatch(addAlbum(form));
-    navigate('/');
+    navigate("/");
   };
 
   const fileInputChangeHandler = (
     eFile: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const {files} = eFile.target;
+    const { files } = eFile.target;
 
     if (files) {
-      setForm((prev) => ({...prev, cover: files[0]}));
+      setForm((prev) => ({ ...prev, cover: files[0] }));
     }
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setForm({...form, [name]: value});
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   return (
@@ -51,16 +51,20 @@ const AlbumForm: React.FC<Props> = ({artists}) => {
           <TextField
             select
             disabled={loading}
-            style={{width: '100%'}}
+            style={{ width: "100%" }}
             value={form.artist}
             required
             onChange={onChangeInput}
             label="Artist"
             name="artist"
           >
-            <MenuItem value='' disabled>Select artist</MenuItem>
-            {artists.map(artist => (
-              <MenuItem value={artist._id} key={artist._id}>{artist.name}</MenuItem>
+            <MenuItem value="" disabled>
+              Select artist
+            </MenuItem>
+            {artists.map((artist) => (
+              <MenuItem value={artist._id} key={artist._id}>
+                {artist.name}
+              </MenuItem>
             ))}
           </TextField>
         </Grid>
@@ -72,7 +76,8 @@ const AlbumForm: React.FC<Props> = ({artists}) => {
             name="title"
             disabled={loading}
             onChange={onChangeInput}
-            variant="outlined"/>
+            variant="outlined"
+          />
         </Grid>
         <Grid size={9}>
           <TextField
@@ -80,10 +85,11 @@ const AlbumForm: React.FC<Props> = ({artists}) => {
             required
             label="Album year"
             disabled={loading}
-            type={'number'}
+            type={"number"}
             name="album_year"
             onChange={onChangeInput}
-            variant="outlined"/>
+            variant="outlined"
+          />
         </Grid>
         <Grid size={9}>
           <FileInput
@@ -96,10 +102,12 @@ const AlbumForm: React.FC<Props> = ({artists}) => {
         <Grid size={9}>
           <Button
             variant="contained"
-            sx={{backgroundColor: '#5F9EA0'}}
+            sx={{ backgroundColor: "#5F9EA0" }}
             type="submit"
             disabled={loading}
-          >Add</Button>
+          >
+            Add
+          </Button>
         </Grid>
       </Grid>
     </form>

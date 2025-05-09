@@ -221,6 +221,14 @@ const run = async () => {
             number: 6,
             isPublished: false,
         },
+        {
+            user: testUser1._id,
+            album: arianaAlbum1._id,
+            title: "Test3",
+            duration: "3:45",
+            number: 7,
+            isPublished: false,
+        },
 
         //---------------------------------------------------------
         {

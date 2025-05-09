@@ -1,7 +1,11 @@
-import { IArtistAPI } from '../../types';
-import { createSlice } from '@reduxjs/toolkit';
-import { addArtist, fetchAllArtists, fetchUnpublishedArtists } from './artistsThunks.ts';
-import { RootState } from '../../app/store.ts';
+import { IArtistAPI } from "../../types";
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  addArtist,
+  fetchAllArtists,
+  fetchUnpublishedArtists,
+} from "./artistsThunks.ts";
+import { RootState } from "../../app/store.ts";
 
 interface ArtistsState {
   allArtists: IArtistAPI[];
@@ -18,7 +22,8 @@ const initialState: ArtistsState = {
 };
 
 export const selectAllArtists = (state: RootState) => state.artists.allArtists;
-export const selectUnpublishedArtists = (state: RootState) => state.artists.unpublishedArtists;
+export const selectUnpublishedArtists = (state: RootState) =>
+  state.artists.unpublishedArtists;
 export const selectFetchLoadingArtist = (state: RootState) =>
   state.artists.fetchLoading;
 
@@ -26,7 +31,7 @@ export const selectCreateLoadingArtist = (state: RootState) =>
   state.artists.createLoading;
 
 export const artistsSlice = createSlice({
-  name: 'artists',
+  name: "artists",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -34,7 +39,7 @@ export const artistsSlice = createSlice({
       .addCase(fetchAllArtists.pending, (state) => {
         state.fetchLoading = true;
       })
-      .addCase(fetchAllArtists.fulfilled, (state, {payload}) => {
+      .addCase(fetchAllArtists.fulfilled, (state, { payload }) => {
         state.fetchLoading = false;
         state.allArtists = payload;
       })
@@ -45,7 +50,7 @@ export const artistsSlice = createSlice({
       .addCase(fetchUnpublishedArtists.pending, (state) => {
         state.fetchLoading = true;
       })
-      .addCase(fetchUnpublishedArtists.fulfilled, (state, {payload}) => {
+      .addCase(fetchUnpublishedArtists.fulfilled, (state, { payload }) => {
         state.fetchLoading = false;
         state.unpublishedArtists = payload;
       })
@@ -62,7 +67,6 @@ export const artistsSlice = createSlice({
       .addCase(addArtist.rejected, (state) => {
         state.createLoading = false;
       });
-
   },
 });
 

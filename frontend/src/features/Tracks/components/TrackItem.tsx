@@ -1,12 +1,6 @@
 import React from "react";
 import { ITrackApi } from "../../../types";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Card, CardActions, CardContent, Typography } from "@mui/material";
 
 interface Props {
   tracks: ITrackApi;
@@ -24,7 +18,7 @@ const TrackItem: React.FC<Props> = ({ tracks }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button sx={{ color: "#a05f5f" }}>Delete</Button>
+        <Typography sx={{ color: "#a05f5f" }}>Not published</Typography>
       </CardActions>
     </Card>
   );

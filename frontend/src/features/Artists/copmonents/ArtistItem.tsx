@@ -3,7 +3,6 @@ import { IArtistAPI } from "../../../types";
 import NoImage from "../../../assets/no_Image.jpg";
 import { BASE_URL } from "../../../constants.ts";
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -42,7 +41,7 @@ const ArtistItem: React.FC<Props> = ({ artist }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button sx={{ color: "#a05f5f" }}>Delete</Button>
+          <Typography sx={{ color: "#a05f5f" }}>Not published</Typography>
         </CardActions>
       </Box>
     </Card>

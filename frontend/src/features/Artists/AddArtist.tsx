@@ -1,5 +1,5 @@
-import ArtistsForm from './copmonents/ArtistsForm.tsx';
-import Typography from '@mui/material/Typography';
+import ArtistsForm from "./copmonents/ArtistsForm.tsx";
+import Typography from "@mui/material/Typography";
 
 const AddArtist = () => {
   return (
@@ -9,8 +9,10 @@ const AddArtist = () => {
         color="textSecondary"
         textAlign="center"
         marginBottom={4}
-      >Add artist</Typography>
-      <ArtistsForm/>
+      >
+        Add artist
+      </Typography>
+      <ArtistsForm />
     </main>
   );
 };
