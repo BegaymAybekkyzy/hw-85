@@ -17,6 +17,7 @@ const TrackForm = () => {
   const artists = useAppSelector(selectAllArtists);
   const albums = useAppSelector(selectAlbumsByArtist);
 
+  const [selectedArtist, setSelectedArtist] = useState("");
   const [form, setForm] = useState<ITrackForm>({
     album: "",
     title: "",
@@ -35,10 +36,6 @@ const TrackForm = () => {
 
   const onChangeInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (name === "artist") {
-      await dispatch(fetchAlbumsByArtist(value));
-    }
     setForm({ ...form, [name]: value });
   };
 
@@ -51,7 +48,11 @@ const TrackForm = () => {
             disabled={loading}
             style={{ width: "100%" }}
             required
-            onChange={onChangeInput}
+            value={selectedArtist}
+            onChange={(e) => {
+              setSelectedArtist(e.target.value);
+              dispatch(fetchAlbumsByArtist(e.target.value));
+            }}
             label="Artist"
             name="artist"
           >
