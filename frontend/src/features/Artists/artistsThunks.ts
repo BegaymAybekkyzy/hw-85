@@ -33,3 +33,10 @@ export const fetchUnpublishedArtists = createAsyncThunk<IArtistAPI[], void>(
     return response.data;
   },
 );
+
+export const deleteArtist = createAsyncThunk<void, string>(
+  'artists/deleteArtist',
+  async (artistId) => {
+    await axiosAPI.delete(`artists/${artistId}`);
+  }
+);

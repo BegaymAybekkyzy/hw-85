@@ -16,6 +16,7 @@ const AlbumForm: React.FC<Props> = ({ artists }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [yearError, setYearError] = useState(false);
   const [form, setForm] = useState<IAlbumForm>({
     artist: "",
     album_year: 0,
@@ -41,7 +42,17 @@ const AlbumForm: React.FC<Props> = ({ artists }) => {
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+
+    if (name === "album_year") {
+      const numericValue = parseInt(value, 10);
+      const currentYear = new Date().getFullYear();
+      const isValid = numericValue >= 1900 && numericValue <= currentYear;
+
+      setYearError(!isValid);
+      setForm({ ...form, [name]: numericValue });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
   };
 
   return (
@@ -87,6 +98,8 @@ const AlbumForm: React.FC<Props> = ({ artists }) => {
             disabled={loading}
             type={"number"}
             name="album_year"
+            error={yearError}
+            helperText={yearError ? "Enter the year from 1900 to the current year" : ""}
             onChange={onChangeInput}
             variant="outlined"
           />

@@ -1,10 +1,10 @@
 import { IArtistAPI } from "../../types";
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  addArtist,
+  addArtist, deleteArtist,
   fetchAllArtists,
   fetchUnpublishedArtists,
-} from "./artistsThunks.ts";
+} from './artistsThunks.ts';
 import { RootState } from "../../app/store.ts";
 
 interface ArtistsState {
@@ -12,6 +12,7 @@ interface ArtistsState {
   fetchLoading: boolean;
   createLoading: boolean;
   unpublishedArtists: IArtistAPI[];
+  deleteLoading: boolean;
 }
 
 const initialState: ArtistsState = {
@@ -19,6 +20,7 @@ const initialState: ArtistsState = {
   unpublishedArtists: [],
   fetchLoading: false,
   createLoading: false,
+  deleteLoading: false,
 };
 
 export const selectAllArtists = (state: RootState) => state.artists.allArtists;
@@ -29,6 +31,9 @@ export const selectFetchLoadingArtist = (state: RootState) =>
 
 export const selectCreateLoadingArtist = (state: RootState) =>
   state.artists.createLoading;
+
+export const selectDeleteLoadingArtist = (state: RootState) =>
+  state.artists.deleteLoading;
 
 export const artistsSlice = createSlice({
   name: "artists",
@@ -66,6 +71,16 @@ export const artistsSlice = createSlice({
       })
       .addCase(addArtist.rejected, (state) => {
         state.createLoading = false;
+      })
+
+      .addCase(deleteArtist.pending, (state) => {
+        state.deleteLoading = true;
+      })
+      .addCase(deleteArtist.fulfilled, (state) => {
+        state.deleteLoading = false;
+      })
+      .addCase(deleteArtist.rejected, (state) => {
+        state.deleteLoading = false;
       });
   },
 });

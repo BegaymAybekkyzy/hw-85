@@ -24,3 +24,10 @@ export const fetchUnpublishedTracks = createAsyncThunk<ITrackApi[], void>(
     return response.data;
   },
 );
+
+export const deleteTrack = createAsyncThunk<void, string>(
+  'tracks/deleteTrack',
+  async (trackId) => {
+    await axiosAPI.delete(`tracks/${trackId}`);
+  }
+);

@@ -80,4 +80,25 @@ trackRouter.post("/", authentication, async (req, res, next) => {
     }
 });
 
+trackRouter.delete("/:id", authentication, async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const user = (req as RequestWithUser).user;
+        const deleteTrack = await Track.deleteOne({_id: id, isPublished: false, user: user._id});
+
+        if (deleteTrack.deletedCount === 0) {
+            res.status(400).send({error: "Unable to delete a track that has already been published or you didn't create it"});
+            return;
+        }
+
+        res.send({message: "Track deleted successfully."});
+    } catch (err) {
+        if (err instanceof Error.ValidationError || err instanceof Error.CastError) {
+            res.status(400).send(err);
+            return;
+        }
+        next(err);
+    }
+});
+
 export default trackRouter;

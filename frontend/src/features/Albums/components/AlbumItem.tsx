@@ -8,14 +8,16 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Box,
-} from "@mui/material";
+  Box, Button,
+} from '@mui/material';
 
 interface Props {
   album: IAlbumApi;
+  onDeleteAlbum: (id: string) => void;
+  loading?: boolean;
 }
 
-const AlbumItem: React.FC<Props> = ({ album }) => {
+const AlbumItem: React.FC<Props> = ({ album, onDeleteAlbum, loading=false }) => {
   let imagePath = NoImage;
 
   if (album.cover) {
@@ -42,6 +44,11 @@ const AlbumItem: React.FC<Props> = ({ album }) => {
         </CardContent>
         <CardActions>
           <Typography sx={{ color: "#a05f5f" }}>Not published</Typography>
+          <Button
+            sx={{ color: "#a05f5f" }}
+            onClick={() => onDeleteAlbum(album._id)}
+            disabled={loading}
+          >Delete</Button>
         </CardActions>
       </Box>
     </Card>

@@ -8,14 +8,16 @@ import {
   CardContent,
   CardMedia,
   Typography,
-  Box,
-} from "@mui/material";
+  Box, Button,
+} from '@mui/material';
 
 interface Props {
   artist: IArtistAPI;
+  onDeleteArtist: (id: string) => void;
+  loading?: boolean;
 }
 
-const ArtistItem: React.FC<Props> = ({ artist }) => {
+const ArtistItem: React.FC<Props> = ({ artist, onDeleteArtist, loading = false }) => {
   let imagePath = NoImage;
 
   if (artist.photo) {
@@ -42,6 +44,11 @@ const ArtistItem: React.FC<Props> = ({ artist }) => {
         </CardContent>
         <CardActions>
           <Typography sx={{ color: "#a05f5f" }}>Not published</Typography>
+          <Button
+            sx={{ color: "#a05f5f" }}
+            onClick={() => onDeleteArtist(artist._id)}
+            disabled={loading}
+          >Delete</Button>
         </CardActions>
       </Box>
     </Card>

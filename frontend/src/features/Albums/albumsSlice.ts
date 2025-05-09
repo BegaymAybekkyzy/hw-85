@@ -2,11 +2,11 @@ import { IAlbumApi } from "../../types";
 import { RootState } from "../../app/store.ts";
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  addAlbum,
+  addAlbum, deleteAlbum,
   fetchAlbumsByArtist,
   fetchAlbumsById,
   fetchUnpublishedAlbums,
-} from "./albumsThunks.ts";
+} from './albumsThunks.ts';
 
 interface AlbumsState {
   albumsByArtist: IAlbumApi[];
@@ -14,6 +14,7 @@ interface AlbumsState {
   albumsInfo: IAlbumApi | null;
   fetchLoading: boolean;
   createLoading: boolean;
+  deleteLoading: boolean;
   artistName: string;
 }
 
@@ -24,6 +25,7 @@ export const initialState: AlbumsState = {
   albumsInfo: null,
   unpublishedAlbums: [],
   createLoading: false,
+  deleteLoading: false,
 };
 
 export const selectAlbumsByArtist = (state: RootState) =>
@@ -36,6 +38,8 @@ export const selectAlbumUnpublished = (state: RootState) =>
   state.albums.unpublishedAlbums;
 export const selectAlbumCreateLoading = (state: RootState) =>
   state.albums.createLoading;
+export const selectAlbumDeleteLoading = (state: RootState) =>
+  state.albums.deleteLoading;
 
 export const albumsSlice = createSlice({
   name: "albums",
@@ -88,7 +92,17 @@ export const albumsSlice = createSlice({
       })
       .addCase(fetchUnpublishedAlbums.rejected, (state) => {
         state.fetchLoading = false;
-      });
+      })
+
+      .addCase(deleteAlbum.pending, (state) => {
+        state.deleteLoading = true;
+      })
+      .addCase(deleteAlbum.fulfilled, (state) => {
+        state.deleteLoading = false;
+      })
+      .addCase(deleteAlbum.rejected, (state) => {
+        state.deleteLoading = false;
+      })
   },
 });
 

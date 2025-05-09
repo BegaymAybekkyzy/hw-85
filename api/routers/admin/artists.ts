@@ -48,7 +48,6 @@ adminArtistRouter.delete("/:id", async (req, res, next) => {
         await Track.deleteMany({album: {$in: albumIds}});
         await Album.deleteMany({artist: id});
         await Artist.deleteOne({_id: id});
-        await Artist.deleteOne({_id: id});
 
         res.send({message: "Artist and related albums and tracks deleted successfully."});
     } catch (err) {

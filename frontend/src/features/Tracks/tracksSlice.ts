@@ -2,16 +2,17 @@ import { RootState } from "../../app/store.ts";
 import { createSlice } from "@reduxjs/toolkit";
 import { ITrackApi } from "../../types";
 import {
-  addTrack,
+  addTrack, deleteTrack,
   fetchTracksByAlbum,
   fetchUnpublishedTracks,
-} from "./tracksThunks.ts";
+} from './tracksThunks.ts';
 
 interface TrackState {
   tracksByArtist: ITrackApi[];
   fetchLoading: boolean;
   unpublishedTracks: ITrackApi[];
   createLoading: boolean;
+  deleteLoading: boolean;
 }
 
 export const initialState: TrackState = {
@@ -19,6 +20,7 @@ export const initialState: TrackState = {
   fetchLoading: false,
   unpublishedTracks: [],
   createLoading: false,
+  deleteLoading: false,
 };
 
 export const selectTracks = (state: RootState) => state.tracks.tracksByArtist;
@@ -28,6 +30,8 @@ export const selectCreateLoadingTrack = (state: RootState) =>
   state.tracks.createLoading;
 export const selectUnpublishedTrack = (state: RootState) =>
   state.tracks.unpublishedTracks;
+export const selectDeleteLoadingTrack = (state: RootState) =>
+  state.tracks.deleteLoading;
 
 export const trackSlice = createSlice({
   name: "artists",
@@ -65,7 +69,17 @@ export const trackSlice = createSlice({
       })
       .addCase(fetchUnpublishedTracks.rejected, (state) => {
         state.fetchLoading = false;
-      });
+      })
+
+      .addCase(deleteTrack.pending, (state) => {
+        state.deleteLoading = true;
+      })
+      .addCase(deleteTrack.fulfilled, (state) => {
+        state.deleteLoading = false;
+      })
+      .addCase(deleteTrack.rejected, (state) => {
+        state.deleteLoading = false;
+      })
   },
 });
 
