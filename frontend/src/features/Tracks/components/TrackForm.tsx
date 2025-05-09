@@ -17,6 +17,7 @@ const TrackForm = () => {
   const artists = useAppSelector(selectAllArtists);
   const albums = useAppSelector(selectAlbumsByArtist);
 
+  const [durationError, setDurationError] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState("");
   const [form, setForm] = useState<ITrackForm>({
     album: "",
@@ -36,6 +37,12 @@ const TrackForm = () => {
 
   const onChangeInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === "duration") {
+      const isValid = /^\d{1,2}:[0-5]\d$/.test(value);
+      setDurationError(!isValid);
+    }
+
     setForm({ ...form, [name]: value });
   };
 
@@ -108,6 +115,8 @@ const TrackForm = () => {
             disabled={loading}
             name="duration"
             required
+            error={durationError}
+            helperText={durationError ? "The format should be mm:ss, e.g. 3:45" : ""}
             onChange={onChangeInput}
             variant="outlined"
           />

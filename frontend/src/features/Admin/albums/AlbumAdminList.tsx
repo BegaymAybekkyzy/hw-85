@@ -16,6 +16,8 @@ import { IAlbumAdmin } from "../../../types";
 import { Grid, IconButton } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import EditIcon from "@mui/icons-material/Edit";
+import { BASE_URL } from '../../../constants.ts';
+import ImageTooltip from '../../../components/UI/ImageTooltip/ImageTooltip.tsx';
 
 const AlbumAdminList = () => {
   const dispatch = useAppDispatch();
@@ -56,7 +58,22 @@ const AlbumAdminList = () => {
       valueGetter: (_value, row) => row.user?.username,
     },
     { field: "title", headerName: "Title", width: 150 },
-    { field: "isPublished", headerName: "Publication status", width: 150 },
+    {
+      field: 'cover',
+      headerName: 'Cover',
+      width: 70,
+      renderCell: (field) => {
+        if (!field.row.cover) {
+          return null;
+        }
+
+        const photoUrl = BASE_URL + '/' + field.row.cover;
+        return (
+          <ImageTooltip photoUrl={photoUrl} altText={field.row.title}/>
+        );
+      },
+    },
+    { field: "isPublished", headerName: "Publication status", width: 130 },
     {
       field: "actions",
       headerName: "",
