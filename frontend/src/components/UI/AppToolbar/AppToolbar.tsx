@@ -68,33 +68,37 @@ const AppToolbar = () => {
               </NavLink>
             </Typography>
           </Grid>
-          <Grid>
-            <Button
-              sx={{ color: "white" }}
-              component={NavLink}
-              to={"/add-artist"}
-            >
-              Add artist
-            </Button>
-          </Grid>
-          <Grid>
-            <Button
-              sx={{ color: "white" }}
-              component={NavLink}
-              to={"/add-album"}
-            >
-              Add album
-            </Button>
-          </Grid>
-          <Grid>
-            <Button
-              sx={{ color: "white" }}
-              component={NavLink}
-              to={"/add-track"}
-            >
-              Add track
-            </Button>
-          </Grid>
+          {user && (
+            <>
+              <Grid>
+                <Button
+                  sx={{ color: "white" }}
+                  component={NavLink}
+                  to={"/add-artist"}
+                >
+                  Add artist
+                </Button>
+              </Grid>
+              <Grid>
+                <Button
+                  sx={{ color: "white" }}
+                  component={NavLink}
+                  to={"/add-album"}
+                >
+                  Add album
+                </Button>
+              </Grid>
+              <Grid>
+                <Button
+                  sx={{ color: "white" }}
+                  component={NavLink}
+                  to={"/add-track"}
+                >
+                  Add track
+                </Button>
+              </Grid>
+            </>
+          )}
         </Grid>
 
         <Grid>
