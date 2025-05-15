@@ -6,8 +6,8 @@ import {
   Button,
   Box,
   Menu,
-  MenuItem,
-} from "@mui/material";
+  MenuItem, Avatar,
+} from '@mui/material';
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks.ts";
@@ -15,9 +15,9 @@ import {
   systemLogout,
   selectUser,
 } from "../../../features/Users/usersSlice.ts";
-import PersonIcon from "@mui/icons-material/Person";
 import React, { useState } from "react";
 import { logout } from "../../../features/Users/userThunks.ts";
+import { BASE_URL } from '../../../constants.ts';
 
 const AppToolbar = () => {
   const user = useAppSelector(selectUser);
@@ -26,6 +26,7 @@ const AppToolbar = () => {
 
   const [userEl, setUserEl] = useState<null | HTMLElement>(null);
   const open = Boolean(userEl);
+  const avatarUrl = user ? BASE_URL + "/" + user.avatar : undefined;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setUserEl(event.currentTarget);
@@ -41,6 +42,37 @@ const AppToolbar = () => {
     setUserEl(null);
     navigate("/");
   };
+
+  const stringToColor = (string: string) => {
+    let hash = 0;
+    let i;
+
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+
+    return color;
+  };
+
+  const stringAvatar = (name: string) => {
+    const parts = name.trim().split(' ');
+    const first = parts[0]?.[0] || '';
+    const second = parts[1]?.[0] || '';
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${first}${second}`,
+    };
+  };
+
 
   return (
     <AppBar
@@ -104,9 +136,12 @@ const AppToolbar = () => {
         <Grid>
           {user ? (
             <Box display="flex" alignItems="center">
-              <span style={{ display: "block" }}>{user.username}</span>
+              <span style={{ display: "block" }}>{user.displayName}</span>
               <Button sx={{ color: "white" }} onClick={handleClick}>
-                <PersonIcon />
+                {user.avatar ?
+                  <Avatar alt={user.displayName} src={avatarUrl} />
+                  :  <Avatar {...stringAvatar(user.displayName)} />
+                }
               </Button>
               <Menu
                 id="basic-menu"
