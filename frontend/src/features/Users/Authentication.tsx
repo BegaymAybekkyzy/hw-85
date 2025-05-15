@@ -5,13 +5,14 @@ import {
   selectAuthenticationLoading,
 } from "./usersSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { authentication } from "./userThunks.ts";
+import { authentication, googleLogin } from './userThunks.ts';
 import Typography from "@mui/material/Typography";
 import { Box, Button, Grid, TextField } from "@mui/material";
-import { IUserForm } from "../../types";
+import { IUserLogin } from '../../types';
+import { GoogleLogin } from '@react-oauth/google';
 
 const Authentication = () => {
-  const [form, setForm] = useState<IUserForm>({
+  const [form, setForm] = useState<IUserLogin>({
     username: "",
     password: "",
   });
@@ -27,6 +28,11 @@ const Authentication = () => {
     navigate("/");
   };
 
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+    navigate("/");
+  }
+
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -38,7 +44,7 @@ const Authentication = () => {
         variant={"h3"}
         color="textSecondary"
         textAlign="center"
-        marginBottom={5}
+        marginBottom={3}
       >
         Login
       </Typography>
@@ -56,6 +62,19 @@ const Authentication = () => {
           alignItems: "center",
         }}
       >
+        <Grid marginBottom={3}>
+          <GoogleLogin
+            onSuccess={credentialResponse => {
+              if(credentialResponse.credential) {
+                void googleLoginHandler(credentialResponse.credential);
+              }
+            }}
+            onError={() => {
+              console.log("Login failed");
+            }}
+          />
+        </Grid>
+
         <form onSubmit={onSubmitForm}>
           <Grid container spacing={2} marginBottom={3}>
             <Grid size={12}>

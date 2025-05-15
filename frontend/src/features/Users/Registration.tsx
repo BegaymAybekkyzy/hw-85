@@ -5,18 +5,20 @@ import {
   selectRegistrationErrors,
   selectRegistrationLoading,
 } from "./usersSlice.ts";
-import { registration } from "./userThunks.ts";
-import { IUserForm } from "../../types";
+import { googleLogin, registration } from './userThunks.ts';
+import { IUserRegistration } from '../../types';
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-
-const initialValue: IUserForm = {
-  username: "",
-  password: "",
-};
-
+import FileInput from '../../components/UI/FileInput/FileInput.tsx';
+import { GoogleLogin } from '@react-oauth/google';
 const Registration = () => {
-  const [form, setForm] = useState(initialValue);
+  const [form, setForm] = useState<IUserRegistration>({
+    username: "",
+    password: "",
+    displayName: "",
+    avatar: null,
+  });
+
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectRegistrationErrors);
   const loading = useAppSelector(selectRegistrationLoading);
@@ -25,9 +27,13 @@ const Registration = () => {
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await dispatch(registration(form)).unwrap();
-    setForm(initialValue);
     navigate("/");
   };
+
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
+    navigate("/");
+  }
 
   const getErrors = (fieldName: string) => {
     try {
@@ -42,6 +48,16 @@ const Registration = () => {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+  };
+
+  const fileInputChangeHandler = (
+    eFile: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { files } = eFile.target;
+
+    if (files) {
+      setForm((prev) => ({ ...prev, avatar: files[0] }));
+    }
   };
 
   let errorIsUsername: React.ReactNode;
@@ -60,7 +76,7 @@ const Registration = () => {
         variant={"h3"}
         color="textSecondary"
         textAlign="center"
-        marginBottom={5}
+        marginBottom={3}
       >
         Register
       </Typography>
@@ -73,9 +89,22 @@ const Registration = () => {
           alignItems: "center",
         }}
       >
+        <Grid marginBottom={3}>
+          <GoogleLogin
+            onSuccess={credentialResponse => {
+              if(credentialResponse.credential) {
+                void googleLoginHandler(credentialResponse.credential);
+              }
+            }}
+            onError={() => {
+              console.log("Login failed");
+            }}
+          />
+        </Grid>
+
         <form onSubmit={onSubmitForm}>
-          <Grid container spacing={2} marginBottom={3}>
-            <Grid size={12}>
+          <Grid container justifyContent="center" spacing={2} marginBottom={3}>
+            <Grid size={9}>
               <TextField
                 fullWidth
                 label="Name"
@@ -88,7 +117,22 @@ const Registration = () => {
                 variant="outlined"
               />
             </Grid>
-            <Grid size={12}>
+
+            <Grid size={9}>
+              <TextField
+                fullWidth
+                label="display name"
+                name="displayName"
+                disabled={loading}
+                helperText={getErrors("displayName")}
+                error={Boolean(getErrors("displayName"))}
+                value={form.displayName}
+                onChange={onChangeInput}
+                variant="outlined"
+              />
+            </Grid>
+
+            <Grid size={9}>
               <TextField
                 fullWidth
                 id="outlined-basic"
@@ -102,16 +146,27 @@ const Registration = () => {
                 variant="outlined"
               />
             </Grid>
+
+            <Grid size={9}>
+              <FileInput
+                name="avatar"
+                label="avatar"
+                onChange={fileInputChangeHandler}
+              />
+            </Grid>
+
+            <Grid size={9}>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: "#5F9EA0" }}
+                type="submit"
+                color="primary"
+                disabled={loading}
+              >
+                Sign in
+              </Button>
+            </Grid>
           </Grid>
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#5F9EA0" }}
-            type="submit"
-            color="primary"
-            disabled={loading}
-          >
-            Sign in
-          </Button>
         </form>
       </Box>
     </div>

@@ -87,7 +87,13 @@ export interface ITrackAdmin {
   title: string;
 }
 
-export interface IUserForm {
+export interface IUserRegistration {
+  username: string;
+  password: string;
+  displayName: string;
+  avatar: File | null;
+}
+export interface IUserLogin {
   username: string;
   password: string;
 }
@@ -97,6 +103,8 @@ export interface IUser {
   username: string;
   role: string;
   token: string;
+  displayName: string;
+  avatar: string;
 }
 export interface IRegistrationError {
   errors: {
