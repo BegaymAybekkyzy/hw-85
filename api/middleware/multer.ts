@@ -17,6 +17,10 @@ const imageStorage = multer.diskStorage({
             imagePath = "covers";
         }
 
+        if(req.baseUrl === "/users"){
+            imagePath = "avatars";
+        }
+
         const destDir = path.join(config.publicPath, imagePath);
         await fs.mkdir(destDir, {recursive: true});
         cb(null, destDir)

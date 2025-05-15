@@ -25,18 +25,21 @@ const run = async () => {
             username: "Bob",
             password: "123",
             role: "user",
+            displayName: "Super bob",
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODFiNzJhNTQ4MWRlZmZjNjRjMDRiNWQiLCJpYXQiOjE3NDY2MzY1ODMsImV4cCI6MTc0OTIyODU4M30.iwc6PmbJfrP_epUkRMHY7QGzBb2t_etSoG9CG_aHwLI",
         },
         {
             username: "Back",
             password: "123",
             role: "user",
+            displayName: "Back",
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODFiNWQ2YjAwNDEyNjhlN2E0NjgzNzEiLCJpYXQiOjE3NDY2MjM4NTEsImV4cCI6MTc0OTIxNTg1MX0.IhJ2CnVhxm_7U9sKGIZokNotOOPsuEcqAxWkFIm-CTI",
         },
         {
             username: "Alice",
             password: "123",
             role: "admin",
+            displayName: "Alice",
             token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODFiM2Q2YjAwNDEyNjhlN2E0NjgzNjciLCJpYXQiOjE3NDY2MTU3NTYsImV4cCI6MTc0OTIwNzc1Nn0.IASOw4JU2OoJ1w0I_56gzfbQYR7Ehi5Qtp0X_2pMCKU",
         },
     );
