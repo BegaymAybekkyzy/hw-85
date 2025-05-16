@@ -23,15 +23,15 @@ app.use("/track_history", trackHistoryRouter);
 app.use(express.static("public"));
 
 const run = async () => {
-    await mongoose.connect(config.db);
+  await mongoose.connect(config.db);
 
-    app.listen(port, () => {
-        console.log(`Server started on http://localhost:${port}`);
-    });
+  app.listen(port, () => {
+    console.log(`Server started on http://localhost:${port}`);
+  });
 
-    process.on("exit", () => {
-        mongoose.disconnect();
-    });
+  process.on("exit", () => {
+    mongoose.disconnect();
+  });
 };
 
 run().catch(console.error);
